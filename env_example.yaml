@@ -87,7 +87,7 @@
           class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
               def do_GET(self):
                   self.send_response(200)
-                  self.send_header("Content-type", "text/plain")
+                  self.send_header("Content-type", "text/plain", 'utf-8')
                   self.end_headers()
                   self.wfile.write(ASCII_CAT.encode('utf-8'))
                   self.wfile.write("\n".encode())
