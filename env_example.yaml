@@ -1,0 +1,43 @@
+---
+- name: Setup a service to return provided variables
+  hosts: all
+  # become root (using sudo, by default)
+  become: yes
+
+  tasks:
+    - name: Install Python if not present
+      package:
+        name: python3
+        state: present
+      become: true
+
+    - name: Create a Python script to serve provided variables
+      copy:
+        dest: /tmp/serve_vars.py
+        content: |
+          #!/usr/bin/env python3
+          from http.server import BaseHTTPRequestHandler, HTTPServer
+          
+          VARIABLES = {
+            'var1': '{{ my_var1 }}',
+            'var2': '{{ my_var2 }}',
+          }
+
+          class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+              def do_GET(self):
+                  self.send_response(200)
+                  self.send_header("Content-type", "text/plain")
+                  self.end_headers()
+                  for key, value in VARIABLES.items():
+                      self.wfile.write(f"{key}: {value}\n".encode())
+
+          if __name__ == "__main__":
+              server_address = ('', 8000)
+              httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
+              print("Serving on port 8000")
+              httpd.serve_forever()
+
+    - name: Start HTTP server
+      shell: "python3 /tmp/serve_vars.py"
+      async: 3600
+      poll: 0
