@@ -61,5 +61,5 @@
 
     - name: Start HTTP server
       shell: "python3 /tmp/serve_vars.py"
-      async: 3600
+      async: 36000
       poll: 0
