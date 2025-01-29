@@ -43,15 +43,15 @@
           class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
               def do_GET(self):
                   self.send_response(200)
-                  self.send_header("Content-type", "text/plain")
+                  self.send_header("Content-type", "text/plain"; charset=utf-8")
                   self.end_headers()
-                  self.wfile.write(ASCII_CAT.encode())
+                  self.wfile.write(ASCII_CAT.encode('utf-8'))
                   self.wfile.write("\n".encode())
-                  self.wfile.write(MESSAGE.encode())
+                  self.wfile.write(MESSAGE.encode('utf-8'))
                   self.wfile.write("\n".encode())
                   self.wfile.write("\n".encode())
                   for key, value in VARIABLES.items():
-                      self.wfile.write(f"{key}: {value}\n".encode())
+                      self.wfile.write(f"{key}: {value}\n".encode('utf-8'))
 
           if __name__ == "__main__":
               server_address = ('', 8000)
