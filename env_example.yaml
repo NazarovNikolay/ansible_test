@@ -34,7 +34,7 @@
                      `- --   -- -'
           '''
 
-          MESSAGE = "Бу, испугался? Не бойся. Вот твои переменные"
+          MESSAGE = "Bu, ispugalsa? Ne boysa. Vot tvoi envs"
 
           class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
               def do_GET(self):
