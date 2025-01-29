@@ -25,11 +25,27 @@
             'var4': '{{ my_var4 }}',
           }
 
+          ASCII_CAT = r'''
+                       /\     /\
+                      {  `---'  }
+                      {  O   O  }
+          ~~_____.{~ ~ ~ ~ ~ ~ ~ ~}~~~        
+                    (             )
+                     `- --   -- -'
+          '''
+
+          MESSAGE = "Бу, испугался? Не бойся. Вот твои переменные"
+
           class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
               def do_GET(self):
                   self.send_response(200)
                   self.send_header("Content-type", "text/plain")
                   self.end_headers()
+                  self.wfile.write(ASCII_CAT.encode())
+                  self.wfile.write("\n".encode())
+                  self.wfile.write(MESSAGE.encode())
+                  self.wfile.write("\n".encode())
+                  self.wfile.write("\n".encode())
                   for key, value in VARIABLES.items():
                       self.wfile.write(f"{key}: {value}\n".encode())
 
