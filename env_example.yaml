@@ -11,10 +11,6 @@
         state: present
       become: true
 
-    - name: Stop any previous server process
-      shell: "pkill -f serve_vars.py"
-      ignore_errors: true
-
     - name: Create a Python script to serve provided variables
       copy:
         dest: /tmp/serve_vars.py
